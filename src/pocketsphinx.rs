@@ -2,11 +2,11 @@ use libc::{c_int, c_char};
 
 // Dummy structures for typed pointers.
 // Only use them as part of pointer type, never dereference.
-#[repr(C)] pub struct cmd_ln_t(i32);
-#[repr(C)] pub struct arg_t(i32);
-#[repr(C)] pub struct ps_decoder_t(i32);
-#[repr(C)] pub struct ps_nbest_t(i32);
-#[repr(C)] pub struct ps_seg_t(i32);
+#[allow(non_camel_case_types)] pub enum cmd_ln_t {}
+#[allow(non_camel_case_types)] pub enum arg_t {}
+#[allow(non_camel_case_types)] pub enum ps_decoder_t {}
+#[allow(non_camel_case_types)] pub enum ps_nbest_t {}
+#[allow(non_camel_case_types)] pub enum ps_seg_t {}
 
 #[link(name="pocketsphinx")]
 extern {
