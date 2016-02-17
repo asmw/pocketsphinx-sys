@@ -5,6 +5,8 @@ use libc::{c_int, c_char};
 #[repr(C)] pub struct cmd_ln_t(i32);
 #[repr(C)] pub struct arg_t(i32);
 #[repr(C)] pub struct ps_decoder_t(i32);
+#[repr(C)] pub struct ps_nbest_t(i32);
+#[repr(C)] pub struct ps_seg_t(i32);
 
 #[link(name="pocketsphinx")]
 extern {
@@ -29,11 +31,28 @@ extern {
                           no_search: c_int,
                           full_utt: c_int)
                           -> c_int;
+    pub fn ps_get_in_speech(ps: *const ps_decoder_t) -> u8;
     pub fn ps_end_utt(ps: *mut ps_decoder_t) -> c_int;
 
     pub fn ps_get_hyp(ps: *mut ps_decoder_t,
                       out_best_score: *mut i32,
                       out_uttid: *mut *const c_char)
                       -> *const c_char;
+    pub fn ps_get_prob(ps: *const ps_decoder_t) -> i32;
+
+    pub fn ps_nbest(ps: *const ps_decoder_t, start_frame: c_int, end_frame: c_int,
+                    ctx1: *const c_char, ctx2: *const c_char) -> *mut ps_nbest_t;
+    pub fn ps_nbest_free(nbest: *mut ps_nbest_t);
+    pub fn ps_nbest_hyp(nbest: *const ps_nbest_t, out_score: *mut i32) -> *const c_char;
+    pub fn ps_nbest_next(nbest: *mut ps_nbest_t) -> *mut ps_nbest_t;
+    pub fn ps_nbest_seg(nbest: *const ps_nbest_t, out_score: *mut i32) -> *mut ps_seg_t;
+
+    pub fn ps_seg_frames(seg: *const ps_seg_t, out_sf: *mut c_int, out_ef: *mut c_int);
+    pub fn ps_seg_free(seg: *mut ps_seg_t);
+    pub fn ps_seg_iter(ps: *const ps_decoder_t, out_best_score: *mut i32) -> *mut ps_seg_t;
+    pub fn ps_seg_next(seg: *mut ps_seg_t) -> *mut ps_seg_t;
+    pub fn ps_seg_prob(seg: *const ps_seg_t,
+                       out_ascr: *mut i32, out_lscr: *mut i32, out_lback: *mut i32) -> i32;
+    pub fn ps_seg_word(seg: *const ps_seg_t) -> *const c_char;
 
 }
