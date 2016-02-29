@@ -2,9 +2,9 @@ use libc::{c_int, c_char};
 
 use super::pocketsphinx::ps_decoder_t;
 
-#[repr(C)] pub struct ps_search_iter_t(i32);
-#[repr(C)] pub struct ngram_model_t(i32);
-#[repr(C)] pub struct fsg_model_t(i32);
+#[allow(non_camel_case_types)] pub enum ps_search_iter_t {}
+#[allow(non_camel_case_types)] pub enum ngram_model_t {}
+#[allow(non_camel_case_types)] pub enum fsg_model_t {}
 
 #[link(name="pocketsphinx")]
 extern {
