@@ -39,7 +39,7 @@ Add `pocketsphinx-sys` as a dependency in `Cargo.toml`:
 
 ```toml
 [dependencies]
-pocketsphinx-sys = "0.4.0"
+pocketsphinx-sys = "0.5.0"
 ```
 
 Import the `pocketsphinx_sys` crate and use the functions.
